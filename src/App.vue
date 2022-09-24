@@ -1,85 +1,89 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+    export default {
+        data() {
+            return {
+                date: null,
+                montant: null,
+                description: null,
+                categorie: "à venir",
+                delete: `<button @click="delLine" class="delete">X</button>`,
+                list: []
+            }
+        },
+        methods: {
+            submit() {
+                // const newDate = new Date(this.date);
+                // console.log(newDate);
+                // const dateTransf = `${(newDate.getDay()<9?"0":"") + newDate.getDay()}/${(newDate.getMonth()<9?"0":"") + newDate.getMonth()}/${newDate.getFullYear()}`
+
+                this.list.push({
+                    date: new Intl.DateTimeFormat('fr-FR').format(new Date(this.date)),
+                    montant: this.montant + "€",
+                    description: this.description,
+                    categorie: this.categorie,
+                    delete: this.delete
+                });
+
+                this.date = null;
+                this.montant = null;
+                this.description = null;
+            },
+
+            delLine(id) {
+                this.list.splice(id, 1);
+            }
+        }
+    }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    
+    <table border="1">
+        <thead>
+            <td>Date</td><td>Montant</td><td>Description</td><td>Catégorie</td>
+        </thead>
+        <tbody>
+            <tr v-for="(obj, id) in list">
+                <td>{{ obj.date }}</td>
+                <td>{{ obj.montant }}</td>
+                <td>{{ obj.description}}</td>
+                <td>{{ obj.categorie }}</td>
+                <td><button @click="delLine(id)" class="delete">X</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form">
+        <label>Date : <input type="date" v-model="date"></label>
+        <label>Montant : <input type="number" v-model="montant"></label>
+        <label>Description : <input type="text" v-model="description"></label>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+        <button formnovalidate="true" v-on:click="submit">Ajouter</button>
     </div>
-  </header>
-
-  <RouterView />
+    
+    
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+table {
+    width: 80%;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
+.form {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+    flex-direction: column;
+    margin-top: 100px;
+    width: 30%;
+    padding: 5px;
+    border: 1px solid black;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.form button {
+    width: 50%;
+    margin: 15px;
+}
 
-  header .wrapper {
+.form label {
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+    margin: 2px;
 }
 </style>
