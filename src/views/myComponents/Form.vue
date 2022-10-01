@@ -1,6 +1,9 @@
+<script setup>
+    import { useListCat } from "@/datas/listCat.js";
+    const listCatStore = useListCat();
+</script>
+
 <script>
-    import listCategories from "@/datas/listCat.js"
-import { listCat } from "../../datas/listCat";
     
     export default {
         data() {
@@ -9,11 +12,7 @@ import { listCat } from "../../datas/listCat";
                 montant: null,
                 description: null,
                 categorie: null,
-                listCat: listCategories
             };
-        },
-        props: {
-            listCat: Array
         },
         methods: {
             submit() {
@@ -34,7 +33,6 @@ import { listCat } from "../../datas/listCat";
             
             
         },
-        components: { Categories }
     }
 </script>
 
@@ -45,9 +43,7 @@ import { listCat } from "../../datas/listCat";
         <label>Description : <input type="text" v-model="description"></label>
         <label>Catégorie : 
             <select >
-                <option v-for="cat in this.listCat">{{ cat }}</option>
-                <option>Logement</option>
-                <option>Manger</option>
+                <option v-for="cat in listCatStore.listCat">{{ cat }}</option>
             </select>
         </label>
         
