@@ -1,0 +1,6 @@
+{
+    "depenses": [
+        { "date": "10/03/2022", "montant": "47", "description": "Elden Ring", "categorie": "Loisirs" }
+    ],
+    "categories": ["Logement","Loisirs", "Manger"]
+}
