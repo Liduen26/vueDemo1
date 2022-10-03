@@ -1,17 +1,6 @@
-<script>
-    
-
-    export default {
-        
-        props: {
-            listTable: Array
-        },
-        methods: {
-            delLine(id) {
-                this.$emit("delEvent", id);
-            }
-        }
-    }
+<script setup>
+    import { useListDep } from "@/stores/listDep.js";
+    const listDepStore = useListDep();
 </script>
 
 <template>
@@ -20,12 +9,12 @@
             <td>Date</td><td>Montant</td><td>Description</td><td>Catégorie</td><td>Actions</td>
         </thead>
         <tbody>
-            <tr v-for="(obj, id) in listTable">
+            <tr v-for="(obj, id) in listDepStore.listDep">
                 <td>{{ obj.date }}</td>
-                <td>{{ obj.montant }}</td>
+                <td>{{ obj.montant }} €</td>
                 <td>{{ obj.description}}</td>
                 <td>{{ obj.categorie }}</td>
-                <td><button @click="delLine(id)" class="delete">X</button></td>
+                <td><button @click="listDepStore.delLine(id)" class="delete">X</button></td>
             </tr>
         </tbody>
     </table>

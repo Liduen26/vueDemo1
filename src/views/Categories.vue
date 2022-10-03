@@ -1,5 +1,5 @@
 <script setup>
-    import { useListCat } from "@/datas/listCat.js";
+    import { useListCat } from "@/stores/listCat.js";    
     const listCatStore = useListCat();
 </script>
 
@@ -10,7 +10,10 @@
 
     <p></p>
 
-    <label>Ajouter une catégorie : <input type="text" v-model="this.toAdd"><button @click="listCatStore.add(this.toAdd)">OK</button></label>
+    <label>Ajouter une catégorie : 
+        <input type="text" v-model="this.toAdd">
+        <button @click="listCatStore.add(this.toAdd)">OK</button>
+    </label>
 </template>
 
 <style scoped>

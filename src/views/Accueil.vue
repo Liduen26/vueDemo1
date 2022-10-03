@@ -1,9 +1,15 @@
 <script>
+    import TableAccueil from "./myComponents/TableAccueil.vue";
     
+    export default {
+        components: { TableAccueil }
+    }
 </script>
 
 <template>
-    <label>Bienvenue dans ce magnifique site de gestion de dépenses !</label>
+    <h1>Accueil</h1>
+
+    <TableAccueil/>
     
 </template>
 

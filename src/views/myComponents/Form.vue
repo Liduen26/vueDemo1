@@ -1,37 +1,34 @@
 <script setup>
-    import { useListCat } from "@/datas/listCat.js";
+    import { useListCat } from "@/stores/listCat.js";
+    import { useListDep } from "@/stores/listDep.js";
+
     const listCatStore = useListCat();
+    const listDepStore = useListDep();
 </script>
 
 <script>
-    
     export default {
         data() {
             return {
                 date: null,
                 montant: null,
                 description: null,
-                categorie: null,
+                categorie: this.listCatStore.listCat[0],
             };
         },
         methods: {
             submit() {
-                console.log(this.listCat);
-                let ret = {
+                this.listDepStore.add({
                     date: new Intl.DateTimeFormat("fr-FR").format(new Date(this.date)),
-                    montant: this.montant + "€",
+                    montant: this.montant,
                     description: this.description,
-                    categorie: this.categorie,
-                };
+                    categorie: this.categorie
+                });
+                
                 this.date = null;
                 this.montant = null;
                 this.description = null;
-                this.categorie = null;
-                
-                this.$emit("logEvent", ret);
             },
-            
-            
         },
     }
 </script>
@@ -42,7 +39,7 @@
         <label>Montant : <input type="number" v-model="montant"></label>
         <label>Description : <input type="text" v-model="description"></label>
         <label>Catégorie : 
-            <select >
+            <select v-model="categorie">
                 <option v-for="cat in listCatStore.listCat">{{ cat }}</option>
             </select>
         </label>
